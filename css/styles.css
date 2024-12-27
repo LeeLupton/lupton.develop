@@ -1,0 +1,386 @@
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth; /* Include if you want smooth scrolling */
+}
+
+body {
+    font-family: 'Montserrat', sans-serif; /* Choose one font family */
+    color: #ececec;
+    background-color: #303030; /* Choose one background color */
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+h1, h2, h3 {
+    color: #ffffff;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Navigation Bar */
+nav {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background: transparent;
+    transition: background 0.3s ease-in-out;
+    z-index: 1000;
+}
+
+nav.scrolled {
+    background: rgba(0, 0, 0, 0.9);
+}
+
+nav .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+}
+
+.logo a {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+    text-decoration: none;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+}
+
+.nav-links li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    position: relative;
+}
+
+.nav-links li a::after {
+    content: '';
+    width: 0;
+    height: 2px;
+    background: #00aaff;
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    transition: width 0.3s;
+}
+
+.nav-links li a:hover::after {
+    width: 100%;
+}
+
+.hamburger {
+    display: none;
+    cursor: pointer;
+}
+
+.hamburger i {
+    font-size: 1.5rem;
+    color: #fff;
+}
+
+/* Hero Section */
+body .hero {
+    background-image: url('../assets/oceanana.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center content horizontally */
+    color: #fff;
+    text-align: center;
+}
+.hero {
+    height: 100vh;
+    background-image: url('../assets/oceanana.jpg'); /* Ensure the path is correct */
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center content horizontally */
+    color: #fff;
+    text-align: center;
+}
+
+/* Overlay for the Hero Section */
+.hero .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.hero .container {
+    position: relative;
+    z-index: 1;
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    animation: fadeInDown 1s ease-out;
+}
+
+.hero p {
+    font-size: 1.5rem;
+    margin: 1rem 0;
+    animation: fadeInUp 1s ease-out;
+}
+
+.hero .btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: #00aaff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    margin-top: 1rem;
+    transition: background 0.3s;
+    animation: fadeInUp 1s ease-out;
+}
+
+.hero .btn:hover {
+    background: #0088cc;
+}
+
+/* Parallax Section */
+.parallax {
+    height: 50vh;
+    background-image: url('../assets/parallax-background.jpg'); /* Replace with your image */
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+}
+
+/* Sections */
+section {
+    padding: 4rem 0;
+    animation: fadeIn 1s ease-out;
+}
+
+section h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    position: relative;
+    display: inline-block;
+}
+
+section h2::after {
+    content: '';
+    width: 50px;
+    height: 3px;
+    background: #00aaff;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -10px;
+}
+
+.profile-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+}
+
+.profile-photo {
+    border-radius: 10px;
+    width: 200px;
+    height: auto;
+    object-fit: cover;
+    transform: translateX(-50px);
+    opacity: 0;
+    animation: slideInLeft 1s ease-out forwards;
+}
+
+.profile-text {
+    opacity: 0;
+    animation: fadeIn 1s ease-out forwards;
+    animation-delay: 0.5s;
+}
+
+.profile-text p {
+    margin-bottom: 1.5rem;
+    text-align: justify;
+}
+
+.experience-item {
+    margin-bottom: 2rem;
+}
+
+.experience-item h3 {
+    margin-bottom: 1rem;
+}
+
+ul {
+    list-style-type: disc;
+    margin-left: 2rem;
+}
+
+li {
+    margin-bottom: 0.5rem;
+}
+
+/* Footer */
+h2 footer {
+    background-color: #333;
+    color: #fff;
+    padding: 3rem 0;
+    text-align: center;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 3rem 0;
+    text-align: center;
+}
+
+footer a {
+    color: #00aaff;
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: #0088cc;
+}
+
+.social-icons {
+    margin: 1.5rem 0;
+}
+
+.social-icons a {
+    color: #fff;
+    margin: 0 0.5rem;
+    font-size: 1.5rem;
+    transition: color 0.3s;
+}
+
+.social-icons a:hover {
+    color: #00aaff;
+}
+
+/* Scroll to Top Button */
+#scrollTopBtn {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    background: #00aaff;
+    color: #fff;
+    border: none;
+    padding: 0.75rem;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: none;
+    z-index: 1000;
+    transition: background 0.3s;
+}
+
+#scrollTopBtn:hover {
+    background: #0088cc;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-50px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(50px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-50px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+    }
+
+    .hamburger {
+        display: block;
+    }
+
+    nav.scrolled .hamburger i {
+        color: #fff;
+    }
+
+    nav.scrolled .logo a {
+        color: #fff;
+    }
+
+    .profile-card {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .profile-photo {
+        transform: translateX(0);
+        animation: fadeIn 1s ease-out forwards;
+    }
+
+    .profile-text {
+        animation-delay: 0s;
+    }
+
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    #scrollTopBtn {
+        right: 20px;
+        bottom: 20px;
+    }
+}
+
+/* Show menu when hamburger is clicked */
+nav.active .nav-links {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.9);
+}
+
+nav.active .nav-links li {
+    margin: 1rem 0;
+    text-align: center;
+}
+
+nav.active .nav-links li a {
+    color: #fff;
+}
