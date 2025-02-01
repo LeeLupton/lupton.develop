@@ -34,30 +34,37 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 document.addEventListener('DOMContentLoaded', function () {
-    const _ = document.getElementById('sr'); // Secret rock element
+    const sr = document.getElementById('sr'); // Secret rock element
 
-    function $() {
-        if (!_) return;
-        const r = _.getBoundingClientRect();
-        const v =
-            r.top >= 0 &&
-            r.left >= 0 &&
-            r.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-            r.right <= (window.innerWidth || document.documentElement.clientWidth);
+    function checkSrVisibility() {
+        if (!sr) return;
+        const rect = sr.getBoundingClientRect();
+        const isVisible =
+            rect.top >= 0 &&
+            rect.left >= 0 &&
+            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.right <= (window.innerWidth || document.documentElement.clientWidth);
 
-        _.style.pointerEvents = v ? "auto" : "none"; // Disable click if not visible
+        if (isVisible) {
+            sr.style.pointerEvents = "auto"; // Allow clicking when visible
+            sr.style.opacity = "1"; // Ensure it's not visually hidden
+        } else {
+            sr.style.pointerEvents = "none"; // Disable clicking when not visible
+            sr.style.opacity = "0.5"; // Reduce visibility for debugging
+        }
     }
 
-    if (_) {
-        _.addEventListener("click", function () {
-            if (_.style.pointerEvents !== "none") {
-                window.location.href = atob("aHR0cHM6Ly93d3cubGVlLWx1cHRvbi53b3JrL3NlY3JldC5odG1s"); // Encoded link
+    if (sr) {
+        sr.addEventListener("click", function () {
+            if (sr.style.pointerEvents !== "none") {
+                window.location.href = atob("aHR0cHM6Ly93d3cubGVlLWx1cHRvbi53b3JrL3NlY3JldC5odG1s"); // Base64-encoded link
             }
         });
     }
 
-    window.addEventListener('scroll', $);
-    window.addEventListener('resize', $);
-    $(); // Initial check on page load
+    window.addEventListener('scroll', checkSrVisibility);
+    window.addEventListener('resize', checkSrVisibility);
+    checkSrVisibility(); // Initial check on page load
 });
+
 
