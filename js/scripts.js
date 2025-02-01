@@ -33,19 +33,11 @@ document.addEventListener('DOMContentLoaded', function () {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 });
-document.addEventListener("DOMContentLoaded", function () {
-    const sr = document.getElementById("sr");
-
+document.addEventListener('DOMContentLoaded', function () {
+    const sr = document.getElementById('sr');
     if (sr) {
-        sr.addEventListener("click", function (e) {
-            // Get the element at the click coordinates
-            const clickedElem = document.elementFromPoint(e.clientX, e.clientY);
-            // Check if the clicked element is sr or a descendant of sr
-            if (sr.contains(clickedElem)) {
-                // If so, redirect to secret.html
-                window.location.href = 'secret.html';
-            }
-            // Otherwise, do nothing (another element is covering the hotspot)
+        sr.addEventListener('click', function () {
+            window.location.href = 'secret.html';
         });
     }
 });
