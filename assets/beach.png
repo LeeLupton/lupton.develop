@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Secret Portal</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+  <style>
+    body { background: #222; color: #eee; font-family: Arial, sans-serif; margin: 0; padding: 0; }
+    .container { max-width: 800px; margin: 50px auto; text-align: center; padding: 20px; }
+    input[type="password"] { padding: 10px; font-size: 16px; width: 200px; }
+    button { padding: 10px 20px; font-size: 16px; margin-left: 10px; }
+    #secretContent { margin-top: 30px; text-align: left; }
+    iframe { max-width: 100%; display: block; margin: 10px auto; }
+    .tradingview-widget-container { margin: 20px 0; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Secret Portal Login</h1>
+    <p>Enter the password to access the secret content:</p>
+    <input type="password" id="password" placeholder="Enter passcode" autocomplete="current-password">
+    <button onclick="decryptSecret()">Enter</button>
+    <div id="secretContent"></div>
+  </div>
+  <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+  <script>
+    var ciphertext = localStorage.getItem("savedCiphertext") || "U2FsdGVkX1+479Uk7vqeP1+rr4qIzF8Sklp+03ZUkA7bSsZN0Bk3pjS8C01VB6KeS8u1s7eqWg/rGyu2Bmz3baJV5E+MieTS1HX7GSZ5O1cWwRJ321tAt0rqH8mn2yRc7ee8D1n2xeZ7fsMmCzD9BSeuKIXG5IxDxzXp21T4vyI1ZRogor9d4ga4/o0bPznsnsiF1hP5W1nNqr+fACd+RFNxz42VeErSv0sE2vHmXaPY9ao8+NIrb1Ymobz1XCdx7zaY2KDKltDZyz7BPTXayL9Kq4ass1rkWwBS2DvvSxjOrQDTOpIhvUD9Mq/wyWKL3qIRHdiXuUp1LmHTWf0FQshq6+COib/jyscSUXDXWvRzZBy08Y+eXCxv6rqWvwZxqhx3Sa/2fuawG192BQirbofrTn/sU3EXrTD98z9azrxQUo/HD74NenSYmjDlC1Py/J3cFWfOhAd8y6VAtrfrcXON2mOeDyuGO08kRzZ44GegpSmbmC6rAvERiZp7u8yWEbqGgVnUBpNHmlFE3QiCKWmzB2CYD5Ji7uvPADgkxZghgi54sR9/IdLKIZwGudALmrZhL1Os44MDOxXviJZNHMK/kwNtsf/fnOHCtWYLA7r5uR+6E2ASaPbOnqxWeIVxJIUReI0j+pTk4mO4WV8VFpBFKktTFqHK+jYbF6uQSLNkS1ihhiNumj+AjCwY2y9w4YzxDAELyM3C/79yguaQVAosDrmGHNFFuD83U/kaPnhIMXAkEQgW0cfQU2xPzeaDHNPXVnHjrfcYapYK+YEudgSphVN+v2RrfPxvEjC6kJWkNHnqWVdIWhmW9SHcW8vzvDg+VPAMJ+6h0tBPdJHjuUACug+GOAZwb76Bcx0BpuNGQ+eJcgnHsn+SjUNs51MVniy/pcEPo7fneMAOIxUrGEJtM+vJ19ays6wknGEVuQi+Z70szhViLpgoJSwnbWt9QtBopFjKFBrXhkXoxhniINPGZtK28CR1dO8YhrYA0Z3XMEai9c1mUZvSQQwqPA1CpooiffTJv/fBpnTdzmx07L/ZiytgUAjRoXx/z4kpMHY=";
+    
+    function decryptSecret() {
+        var password = document.getElementById('password').value;
+        localStorage.setItem("savedPass", password);
+        try {
+            var bytes = CryptoJS.AES.decrypt(ciphertext, password);
+            var decryptedText = bytes.toString(CryptoJS.enc.Utf8);
+            
+            if (decryptedText) {
+                document.getElementById('secretContent').innerHTML = decryptedText;
+                loadTradingView();
+            } else {
+                alert("Incorrect password or decryption failed.");
+            }
+        } catch (e) {
+            alert("Decryption error.");
+        }
+    }
+    
+    function loadTradingView() {
+        new TradingView.widget({
+            "width": "100%",
+            "height": "500",
+            "symbol": "SPY",
+            "interval": "D",
+            "timezone": "Etc/UTC",
+            "theme": "dark",
+            "style": "1",
+            "locale": "en",
+            "toolbar_bg": "#f1f3f6",
+            "enable_publishing": false,
+            "allow_symbol_change": true,
+            "container_id": "tradingview_spy"
+        });
+    }
+    
+    window.onload = function() {
+        if (localStorage.getItem("savedPass")) {
+            document.getElementById("password").value = localStorage.getItem("savedPass");
+            decryptSecret();
+        }
+    };
+  </script>
+</body>
+</html>
