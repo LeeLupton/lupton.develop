@@ -34,26 +34,30 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 document.addEventListener('DOMContentLoaded', function () {
-    const s = document.getElementById('sr');
+    const _ = document.getElementById('sr'); // Secret rock element
 
-    function c() {
-        if (!s) return;
-        const r = s.getBoundingClientRect();
-        if (r.top >= 0 && r.left >= 0 && r.bottom <= (window.innerHeight || document.documentElement.clientHeight) && r.right <= (window.innerWidth || document.documentElement.clientWidth)) {
-            s.classList.remove('x');
-        } else {
-            s.classList.add('x');
-        }
+    function $() {
+        if (!_) return;
+        const r = _.getBoundingClientRect();
+        const v =
+            r.top >= 0 &&
+            r.left >= 0 &&
+            r.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+            r.right <= (window.innerWidth || document.documentElement.clientWidth);
+
+        _.style.pointerEvents = v ? "auto" : "none"; // Disable click if not visible
     }
 
-    if (s) {
-        s.addEventListener("click", function () {
-            if (!s.classList.contains("x")) {
-                window.location.href = atob("aHR0cHM6Ly95b3VyLXNlY3JldC1saW5rLmNvbQ=="); // Encoded URL
+    if (_) {
+        _.addEventListener("click", function () {
+            if (_.style.pointerEvents !== "none") {
+                window.location.href = atob("aHR0cHM6Ly93d3cubGVlLWx1cHRvbi53b3JrL3NlY3JldC5odG1s"); // Encoded link
             }
         });
     }
 
-    window.addEventListener('scroll', c);
-    c();
+    window.addEventListener('scroll', $);
+    window.addEventListener('resize', $);
+    $(); // Initial check on page load
 });
+
