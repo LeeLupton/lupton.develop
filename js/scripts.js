@@ -49,7 +49,6 @@ document.addEventListener('DOMContentLoaded', function () {
             sr.style.pointerEvents = "auto"; // Allow clicking when visible
             sr.style.opacity = "1"; // Ensure it's not visually hidden
         } else {
-            sr.style.pointerEvents = "none"; // Disable clicking when not visible
             sr.style.opacity = "0.5"; // Reduce visibility for debugging
         }
     }
