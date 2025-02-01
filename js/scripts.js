@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 document.addEventListener('DOMContentLoaded', function () {
-    const sr = document.getElementById('sr'); // Secret rock element
+    const sr = document.getElementById('sr');
 
     function checkSrVisibility() {
         if (!sr) return;
