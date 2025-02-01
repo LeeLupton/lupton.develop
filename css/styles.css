@@ -384,18 +384,14 @@ nav.active .nav-links li {
 nav.active .nav-links li a {
     color: #fff;
 }
+/* Clickable hotspot for the secret page in the bottom left corner */
 #sr {
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    background: transparent;
-    left: 40%;
-    top: 60%;
-    cursor: pointer;
-    pointer-events: none;
-    z-index: 5;
-}
-
-#sr.visible {
-    pointer-events: auto;
+    position: fixed;
+    left: 0;              /* Align to the left */
+    bottom: 0;            /* Align to the bottom */
+    width: 100px;         /* Adjust width as desired */
+    height: 100px;        /* Adjust height as desired */
+    pointer-events: auto; /* Allow clicks */
+    z-index: 1;           /* Lower z-index so that if any other element covers this area, they’ll receive the click */
+    /* No background defined—this is an invisible hotspot */
 }
