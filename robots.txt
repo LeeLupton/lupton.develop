@@ -1,0 +1,6 @@
+# Allow all user agents
+User-agent: *
+Allow: /
+
+# Reference sitemap
+Sitemap: https://www.lee-lupton.work/sitemap.xml
