@@ -5,6 +5,6 @@
 # Personal Website
   - This is my personal website
 ### View Here:
-https://leelupton.com
+https://lupton.dev
 or
 https://lee-lupton.work
