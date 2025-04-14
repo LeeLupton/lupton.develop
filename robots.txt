@@ -1,6 +1,4 @@
-# Allow all user agents
 User-agent: *
-Allow: /
+Disallow: /secret.html
 
-# Reference sitemap
 Sitemap: https://lupton.dev/sitemap.xml
