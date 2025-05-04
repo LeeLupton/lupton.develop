@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Course Announcements Feed</title>
+  <!-- Minimal, self‑contained styling -->
+  <style>
+    :root {
+      --bg: #f5f6fa;
+      --card-bg: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --radius: 0.75rem;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 2rem 1rem;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-size: 2rem;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      padding: 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+    .card h2 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+    .card time {
+      display: block;
+      font-size: 0.875rem;
+      color: var(--muted);
+    }
+    .loading,
+    .error {
+      text-align: center;
+      font-size: 1rem;
+      padding: 2rem 0;
+    }
+    .error {
+      color: #b91c1c;
+    }
+    article p {
+      margin: 0.5rem 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Course Announcements</h1>
+    <div id="status" class="loading">Loading announcements…</div>
+    <div id="feed-items" hidden></div>
+  </div>
+
+  <script>
+    (function () {
+      const FEED_URL =
+        "https://online.mynclearning.com/feeds/announcements/enrollment_8cEwOZ9Gj7MiSoaKyLFVU56o8zqQMtIIWeMxOA1h.atom";
+
+      /**
+       * Fetches the Atom feed via the AllOrigins proxy to avoid CORS restrictions
+       * and returns an array of entries (id, title, published, content).
+       */
+      async function fetchFeed(url) {
+        const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
+        const res = await fetch(proxyUrl);
+        if (!res.ok) throw new Error("Failed to fetch feed");
+        const xmlText = await res.text();
+
+        // Parse the XML string
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xmlText, "application/xml");
+
+        // If the proxy returned an error JSON instead of XML, xmlDoc will be HTML
+        if (xmlDoc.querySelector("parsererror")) {
+          throw new Error("Feed could not be parsed – maybe the URL is invalid.");
+        }
+
+        return Array.from(xmlDoc.querySelectorAll("entry")).map((entry) => ({
+          id: entry.querySelector("id")?.textContent || crypto.randomUUID(),
+          title: entry.querySelector("title")?.textContent || "Untitled",
+          published: entry.querySelector("published")?.textContent || "",
+          content:
+            entry.querySelector("content")?.textContent ||
+            entry.querySelector("summary")?.textContent ||
+            "",
+        }));
+      }
+
+      /** Renders the feed entries to the page */
+      function renderFeed(entries) {
+        const feedEl = document.getElementById("feed-items");
+        if (entries.length === 0) {
+          feedEl.innerHTML = "<p class=\"loading\">No announcements found.</p>";
+          feedEl.hidden = false;
+          return;
+        }
+
+        feedEl.innerHTML = entries
+          .map((e) => {
+            const dateStr = e.published
+              ? new Date(e.published).toLocaleString()
+              : "";
+            return `
+              <div class="card">
+                <h2>${e.title}</h2>
+                ${dateStr ? `<time datetime="${e.published}">${dateStr}</time>` : ""}
+                <article>${e.content}</article>
+              </div>
+            `;
+          })
+          .join("");
+        feedEl.hidden = false;
+      }
+
+      // Kick off the fetch → render flow
+      fetchFeed(FEED_URL)
+        .then((items) => {
+          document.getElementById("status").remove();
+          renderFeed(items);
+        })
+        .catch((err) => {
+          console.error(err);
+          const statusEl = document.getElementById("status");
+          statusEl.className = "error";
+          statusEl.textContent = err.message;
+        });
+    })();
+  </script>
+</body>
+</html>
